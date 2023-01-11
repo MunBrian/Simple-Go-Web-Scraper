@@ -6,6 +6,13 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// create a countyData struct
+type countryData struct {
+	CountryName string
+	CapitalCity string
+	Population  string
+}
+
 func main() {
 	//colly setup
 	c := colly.NewCollector(colly.AllowedDomains("www.scrapethissite.com"))
@@ -23,12 +30,14 @@ func main() {
 	})
 
 	c.OnHTML("div.col-md-4.country", func(h *colly.HTMLElement) {
-		country := h.ChildText("h3.country-name")
-		capital := h.ChildText("span.country-capital")
-		population := h.ChildText("span.country-population")
 
-		fmt.Println(country, capital, population)
+		countryData := countryData{
+			CountryName: h.ChildText("h3.country-name"),
+			CapitalCity: h.ChildText("span.country-capital"),
+			Population:  h.ChildText("span.country-population"),
+		}
 
+		fmt.Println(countryData)
 	})
 
 	c.Visit("https://www.scrapethissite.com/pages/simple/")
