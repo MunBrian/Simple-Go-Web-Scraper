@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/gocolly/colly"
 )
@@ -41,10 +43,25 @@ func main() {
 		}
 
 		countryDataSlice = append(countryDataSlice, countryData)
-
-		fmt.Print(countryDataSlice)
 	})
 
 	c.Visit("https://www.scrapethissite.com/pages/simple/")
+
+	for _, country := range countryDataSlice {
+		if country.CountryName == "Kenya" {
+			fmt.Print(country)
+		}
+	}
+
+	//pass slice to json Marshall
+	content, err := json.Marshal(countryDataSlice)
+
+	//handle error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//write a json file pass name, data and permission
+	os.WriteFile("country-data.json", content, 0644)
 
 }
