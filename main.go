@@ -13,6 +13,9 @@ type countryData struct {
 	Population  string
 }
 
+// define a slice to countryData struct type
+var countryDataSlice = make([]countryData, 0)
+
 func main() {
 	//colly setup
 	c := colly.NewCollector(colly.AllowedDomains("www.scrapethissite.com"))
@@ -37,7 +40,9 @@ func main() {
 			Population:  h.ChildText("span.country-population"),
 		}
 
-		fmt.Println(countryData)
+		countryDataSlice = append(countryDataSlice, countryData)
+
+		fmt.Print(countryDataSlice)
 	})
 
 	c.Visit("https://www.scrapethissite.com/pages/simple/")
