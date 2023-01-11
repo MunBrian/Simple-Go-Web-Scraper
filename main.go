@@ -22,6 +22,15 @@ func main() {
 		fmt.Println("Status:", r.StatusCode)
 	})
 
+	c.OnHTML("div.col-md-4.country", func(h *colly.HTMLElement) {
+		country := h.ChildText("h3.country-name")
+		capital := h.ChildText("span.country-capital")
+		population := h.ChildText("span.country-population")
+
+		fmt.Println(country, capital, population)
+
+	})
+
 	c.Visit("https://www.scrapethissite.com/pages/simple/")
 
 }
