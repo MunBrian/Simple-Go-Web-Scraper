@@ -47,13 +47,7 @@ func main() {
 
 	c.Visit("https://www.scrapethissite.com/pages/simple/")
 
-	for _, country := range countryDataSlice {
-		if country.CountryName == "Kenya" {
-			fmt.Print(country)
-		}
-	}
-
-	//pass slice to json Marshall
+	//pass slice to json Marshall to change data to json
 	content, err := json.Marshal(countryDataSlice)
 
 	//handle error
